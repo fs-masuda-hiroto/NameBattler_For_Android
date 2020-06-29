@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.BattleResultActivity">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="70sp"
+        android:layout_gravity="center"
+        android:background="@color/colorGray"
+        android:gravity="center"
+        android:text="@string/battle_result"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/selected_chara_list"
+        android:layout_width="390sp"
+        android:layout_height="120sp"
+        android:layout_marginTop="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+    <FrameLayout
+        android:id="@+id/selected_target_chara_list"
+        android:layout_width="390sp"
+        android:layout_height="120sp"
+        android:layout_marginTop="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selected_chara_list" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20sp"
+        android:layout_marginBottom="20sp"
+        android:gravity="center"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/challenge_again_button"
+        app:layout_constraintEnd_toEndOf="@+id/selected_target_chara_list"
+        app:layout_constraintStart_toStartOf="@+id/selected_target_chara_list"
+        app:layout_constraintTop_toBottomOf="@+id/selected_target_chara_list" />
+
+    <Button
+        android:id="@+id/challenge_again_button"
+        android:layout_width="350sp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style"
+        android:text="@string/challenge_again"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:layout_marginBottom="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/next_battle_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/next_battle_button"
+        android:layout_width="350sp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style"
+        android:text="@string/next_battle"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        android:layout_marginBottom="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/end_battle_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/end_battle_button"
+        android:layout_width="350sp"
+        android:layout_height="wrap_content"
+        android:text="@string/end_battle"
+        android:textSize="24sp"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/button_style"
+        android:layout_marginBottom="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
