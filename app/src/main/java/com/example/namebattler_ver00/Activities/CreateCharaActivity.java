@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.namebattler_ver00.CharaConfig;
 import com.example.namebattler_ver00.DBMyOpenHelper;
@@ -33,6 +34,8 @@ import java.util.Locale;
 public class CreateCharaActivity extends AppCompatActivity {
 
     private DBOperation dbOperation;
+    private String ALREADY_MESSAGE = "既に登録されているキャラです";
+    private String NO_NAME = "名前が入力されていません";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,27 +58,30 @@ public class CreateCharaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String inputName = inputNameText.getText().toString();
-
                 int checkedId = jobGroup.getCheckedRadioButtonId();
                 RadioButton checkedJobRadio = findViewById(checkedId);
                 String checkedJob = checkedJobRadio.getText().toString();
 
-                // 登録されている名前が存在するか判定
-                if(dbOperation.getRecodeCount(inputName) > 0) {
-                    alertRegisterAlready();
+                if(inputName.equals("")) {
+                    alertRegisterAlready(NO_NAME);
                 } else {
-                    registerCharaToDB(createChara(inputName, checkedJob));
-                    Intent intent = new Intent(getApplication(), CreatedCharaActivity.class);
-                    intent.putExtra("CHARA_NAME",inputName);
-                    startActivity(intent);
+                    // 登録されている名前が存在するか判定
+                    if(dbOperation.getRecodeCount(inputName) > 0) {
+                        alertRegisterAlready(ALREADY_MESSAGE);
+                    } else {
+                        registerCharaToDB(createChara(inputName, checkedJob));
+                        Intent intent = new Intent(getApplication(), CreatedCharaActivity.class);
+                        intent.putExtra("CHARA_NAME",inputName);
+                        startActivity(intent);
+                    }
                 }
             }
         });
     }
 
-    private void alertRegisterAlready() {
+    private void alertRegisterAlready(String message) {
         AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(this);
-        myAlertBuilder.setMessage("既に登録されているキャラです");
+        myAlertBuilder.setMessage(message);
 
         myAlertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override

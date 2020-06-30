@@ -9,10 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.namebattler_ver00.CharaConfig;
+import com.example.namebattler_ver00.DBOperation;
+import com.example.namebattler_ver00.DBTargetOpenHelper;
 import com.example.namebattler_ver00.Fragments.HeaderFragment;
 import com.example.namebattler_ver00.Fragments.RegisterCharaListFragment;
 import com.example.namebattler_ver00.Fragments.SelectedMyPartyFragment;
 import com.example.namebattler_ver00.Fragments.SelectedTargetPartyFragment;
+import com.example.namebattler_ver00.GameSystem.Player;
 import com.example.namebattler_ver00.R;
 import com.example.namebattler_ver00.TargetCharaList;
 
@@ -22,6 +26,8 @@ public class SelectTargetPartyActivity extends AppCompatActivity implements Regi
 
     private ArrayList<String> mMyParty = new ArrayList<>();
     private ArrayList<String> mTargetParty = new ArrayList<>();
+    private TargetCharaList targetCharaList;
+    private DBOperation mDbOperation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +37,13 @@ public class SelectTargetPartyActivity extends AppCompatActivity implements Regi
         Intent intent = getIntent();
         mMyParty = intent.getStringArrayListExtra("MY_PARTY");
 
-        final TargetCharaList targetCharaList = new TargetCharaList();
+        targetCharaList = new TargetCharaList();
+        mDbOperation = new DBOperation("TARGET_CHARACTERS",
+                new DBTargetOpenHelper(getApplicationContext()));
+        if(mDbOperation.readAllDB().size() <= 0) {
+            insertDBTargetChara();
+        }
+
         mTargetParty = targetCharaList.genTargetParty();
         // 再挑戦を選択されたら、前回のバトルの敵キャラをセットする
         if(intent.getStringArrayListExtra("TARGET_PARTY") != null) {
@@ -69,5 +81,32 @@ public class SelectTargetPartyActivity extends AppCompatActivity implements Regi
 
     @Override
     public void onCharaClicked(String charaName) {
+    }
+
+    // 敵キャラを登録する用のメソッド
+    private void insertDBTargetChara() {
+        ArrayList<CharaConfig> targetChara = new ArrayList<>();
+        ArrayList<Player> setTargetCharaList = new ArrayList<>();
+        CreateCharaActivity createCharaActivity = new CreateCharaActivity();
+
+        setTargetCharaList = targetCharaList.getTargetCharaList();
+
+        for(int i = 0; i < setTargetCharaList.size(); i++) {
+
+            String name = setTargetCharaList.get(i).getName();
+            String job = setTargetCharaList.get(i).getJobName();
+            int hp = setTargetCharaList.get(i).getHP();
+            int mp = setTargetCharaList.get(i).getMP();
+            int str = setTargetCharaList.get(i).getSTR();
+            int def = setTargetCharaList.get(i).getDEF();
+            int agi = setTargetCharaList.get(i).getAGI();
+            int luck = setTargetCharaList.get(i).getLUCK();
+            String createAt = createCharaActivity.getTime();
+
+            targetChara.add(new CharaConfig(name,job,hp,mp,str,def,agi,luck,createAt));
+            mDbOperation.insertDB(targetChara);
+
+            targetChara.clear();
+        }
     }
 }

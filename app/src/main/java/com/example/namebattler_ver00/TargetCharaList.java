@@ -121,34 +121,4 @@ public class TargetCharaList {
     public ArrayList<Player> getTargetCharaList() {
         return mTargetCharaList;
     }
-
-    // 敵キャラを登録する用のメソッド
-//    private void insertDBTargetChara() {
-//        TargetCharaList targetCharaList = new TargetCharaList();
-//        DBOperation dbOperation = new DBOperation("TARGET_CHARACTERS",new DBTargetOpenHelper(getApplicationContext()));
-//        ArrayList<CharaConfig> targetChara = new ArrayList<>();
-//        ArrayList<Player> setTargetCharaList = new ArrayList<>();
-//        CreateCharaActivity createCharaActivity = new CreateCharaActivity();
-//
-//        setTargetCharaList = targetCharaList.getTargetCharaList();
-//
-//        for(int i = 0; i < setTargetCharaList.size(); i++) {
-//
-//            String name = setTargetCharaList.get(i).getName();
-//            String job = setTargetCharaList.get(i).getJobName();
-//            int hp = setTargetCharaList.get(i).getHP();
-//            int mp = setTargetCharaList.get(i).getMP();
-//            int str = setTargetCharaList.get(i).getSTR();
-//            int def = setTargetCharaList.get(i).getDEF();
-//            int agi = setTargetCharaList.get(i).getAGI();
-//            int luck = setTargetCharaList.get(i).getLUCK();
-//            String createAt = createCharaActivity.getTime();
-//
-//            targetChara.add(new CharaConfig(name,job,hp,mp,str,def,agi,luck,createAt));
-//            dbOperation.insertDB(targetChara);
-//
-//            targetChara.clear();
-//        }
-//
-//    }
 }
